@@ -4,143 +4,185 @@
     <meta charset="utf-8">
 	<title>Cinétransat 2014</title>
 </head>
-<body>
-	<div id="movies"></div>
-	<script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+<body onload="displayMovies">
+	<form action="http://doodle.com/create" method="GET">
+        <div id="movies"></div>
+        <input type="hidden" name="type" value="date">
+        <input type="hidden" name="levels" value="2">
+        <input type="hidden" name="title" value="Cinétransat">
+        <input type="hidden" name="description" value="Viens voir des films avec moi à Cinétransat!">
+        <input type="hidden" name="location" value="Parc de la Perle du Lac, Genève">
+        <input type="submit" value="J'ai fait mon choix!">
+    </form>
+    <script id="template" type="x-tmpl-mustache">
+        <ul>
+        {{#movies}}
+        <li>
+            {{date}}
+            <a href="http://www.cinetransat.ch/2014/date/{{url}}/#films_first">{{title}}</a>
+            <img src="http://www.cinetransat.ch/2014/wp-content/uploads/{{img}}" alt="{{title}}">
+            <input type="checkbox" name="{{date}}" value="{{time}} {{title}}">
+        </li>
+        {{/movies}}
+        </ul>
+    </script>
+	<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache.min.js"></script>
 	<script>
-/*
-http://doodle.com/create?
-
-20140708=22%3A00+BRA-GER&20140709=22%3A00+NED-ARG&type=date&levels=3&title=World+Cup+2014+-+We+enjoy+the+matches+together&description=I+would+like+to+enjoy+the+following+World-Cup+matches+with+you%3A%0A%0A-+08.07.+22%3A00+Brazil+-+Germany%0A-+09.07.+22%3A00+Netherlands+-+Argentina%0A&location=
-
-{dateYYYYMMDD}={HH}:{MM}+{eventName}&type=date&levels=3&title=Cinétransat&description=T'as+envie+de+venir+voir+les+films+suivants+avec+moi?&location=
-
-
-: => %3A
-*/
-
-var data = [{
-url: "http://www.cinetransat.ch/2014/date/10-juillet/#films_first",
+var data = {"movies":[{
+url: "10-juillet",
 title: "Ferris Bueller’s Day Off",
-img: "http://www.cinetransat.ch/2014/wp-content/uploads/ferris-bueller_00414796-283x160.jpg",
-date: "20140710"
+img: "ferris-bueller_00414796-283x160.jpg",
+date: "20140710",
+time: "20:00"
 },{
-url: "http://www.cinetransat.ch/2014/date/11-juillet/#films_first",
+url: "11-juillet",
 title: "Cashback",
-img: "http://www.cinetransat.ch/2014/wp-content/uploads/imagecashback-283x160.png",
-date: "20140711"
-},{                          
-url: "http://www.cinetransat.ch/2014/date/12-juillet/#films_first",
+img: "imagecashback-283x160.png",
+date: "20140711",
+time: "20:00"
+},{
+url: "12-juillet",
 title: "Back to the future II",
-img: "http://www.cinetransat.ch/2014/wp-content/uploads/back-to-the-future--283x160.jpg",
-date: "20140712"
-},{                          
-url: "http://www.cinetransat.ch/2014/date/13-juillet/#films_first",
+img: "back-to-the-future--283x160.jpg",
+date: "20140712",
+time: "20:00"
+},{
+url: "13-juillet",
 title: "À bout de souffle",
-img: "http://www.cinetransat.ch/2014/wp-content/uploads/a-bout-de-souffle-godard-283x160.jpg",
-date: "20140713"
-},{                          
-url: "http://www.cinetransat.ch/2014/date/17-juillet/#films_first",
+img: "a-bout-de-souffle-godard-283x160.jpg",
+date: "20140713",
+time: "20:00"
+},{
+url: "17-juillet",
 title: "Wadjda",
-img: "http://www.cinetransat.ch/2014/wp-content/uploads/image-Wadjda-283x160.jpg",
-date: "20140717"
-},{                          
-url: "http://www.cinetransat.ch/2014/date/18-juillet/#films_first",
+img: "image-Wadjda-283x160.jpg",
+date: "20140717",
+time: "20:00"
+},{
+url: "18-juillet",
 title: "Groundhog Day",
-img: "http://www.cinetransat.ch/2014/wp-content/uploads/image-groundhogday1-283x160.jpg",
-date: "20140718"
-},{                   
-url: "http://www.cinetransat.ch/2014/date/19-juillet/#films_first",
+img: "image-groundhogday1-283x160.jpg",
+date: "20140718",
+time: "20:00"
+},{
+url: "19-juillet",
 title: "Alien",
-img: "http://www.cinetransat.ch/2014/wp-content/uploads/image-alien-283x160.jpg",
-date: "20140719"
-},{                          
-url: "http://www.cinetransat.ch/2014/date/20-juillet/#films_first",
+img: "image-alien-283x160.jpg",
+date: "20140719",
+time: "20:00"
+},{
+url: "20-juillet",
 title: "Soirée courts métrages",
-img: "http://www.cinetransat.ch/2014/wp-content/uploads/imagecourts-283x160.jpg",
-date: "20140720"
-},{                          
-url: "http://www.cinetransat.ch/2014/date/24-juillet/#films_first",
+img: "imagecourts-283x160.jpg",
+date: "20140720",
+time: "20:00"
+},{
+url: "24-juillet",
 title: "C.R.A.Z.Y",
-img: "http://www.cinetransat.ch/2014/wp-content/uploads/image-crazy-283x160.jpg",
-date: "20140724"
-},{                          
-url: "http://www.cinetransat.ch/2014/date/25-juillet/#films_first",
+img: "image-crazy-283x160.jpg",
+date: "20140724",
+time: "20:00"
+},{
+url: "25-juillet",
 title: "Total Recall",
-img: "http://www.cinetransat.ch/2014/wp-content/uploads/image-totarecall-283x160.jpg",
-date: "20140725"
-},{                          
-url: "http://www.cinetransat.ch/2014/date/26-juillet/#films_first",
+img: "image-totarecall-283x160.jpg",
+date: "20140725",
+time: "20:00"
+},{
+url: "26-juillet",
 title: "Saturday Night Fever",
-img: "http://www.cinetransat.ch/2014/wp-content/uploads/image-saturdaynightfever-283x160.jpg",
-date: "20140726"
-},{                          
-url: "http://www.cinetransat.ch/2014/date/27-juillet/#films_first",
+img: "image-saturdaynightfever-283x160.jpg",
+date: "20140726",
+time: "20:00"
+},{
+url: "27-juillet",
 title: "Kiki la petite sorcière",
-img: "http://www.cinetransat.ch/2014/wp-content/uploads/image-Kiki-283x160.jpg",
-date: "20140727"
-},{                          
-url: "http://www.cinetransat.ch/2014/date/31-juillet/#films_first",
+img: "image-Kiki-283x160.jpg",
+date: "20140727",
+time: "20:00"
+},{
+url: "31-juillet",
 title: "Whale rider",
-img: "http://www.cinetransat.ch/2014/wp-content/uploads/image-whalerider-283x160.jpg",
-date: "20140731"
-},{                          
-url: "http://www.cinetransat.ch/2014/date/1-aout/#films_first",
+img: "image-whalerider-283x160.jpg",
+date: "20140731",
+time: "20:00"
+},{
+url: "1-aout",
 title: "The Usual Suspects",
-img: "http://www.cinetransat.ch/2014/wp-content/uploads/image-theusualsuspects-283x160.jpg",
-date: "20140801"
-},{                          
-url: "http://www.cinetransat.ch/2014/date/2-aout/#films_first",
+img: "image-theusualsuspects-283x160.jpg",
+date: "20140801",
+time: "20:00"
+},{
+url: "2-aout",
 title: "Notting Hill",
-img: "http://www.cinetransat.ch/2014/wp-content/uploads/image-nottinghill-283x160.jpg",
-date: "20140802"
-},{                          
-url: "http://www.cinetransat.ch/2014/date/3-aout/#films_first",
+img: "image-nottinghill-283x160.jpg",
+date: "20140802",
+time: "20:00"
+},{
+url: "3-aout",
 title: "The Artist",
-img: "http://www.cinetransat.ch/2014/wp-content/uploads/image-theartist-283x160.jpg",
-date: "20140803"
-},{                          
-url: "http://www.cinetransat.ch/2014/date/7-aout/#films_first",
+img: "image-theartist-283x160.jpg",
+date: "20140803",
+time: "20:00"
+},{
+url: "7-aout",
 title: "Invictus",
-img: "http://www.cinetransat.ch/2014/wp-content/uploads/image-invictus-283x160.jpg",
-date: "20140807"
-},{                          
-url: "http://www.cinetransat.ch/2014/date/8-aout/#films_first",
+img: "image-invictus-283x160.jpg",
+date: "20140807",
+time: "20:00"
+},{
+url: "8-aout",
 title: "Le grand bleu",
-img: "http://www.cinetransat.ch/2014/wp-content/uploads/image-legrandbleu-283x160.jpg",
-date: "20140808"
-},{                          
-url: "http://www.cinetransat.ch/2014/date/9-aout/#films_first",
+img: "image-legrandbleu-283x160.jpg",
+date: "20140808",
+time: "20:00"
+},{
+url: "9-aout",
 title: "Videorama – La Machine à Clips IV",
-img: "http://www.cinetransat.ch/2014/wp-content/uploads/imageVideoramaIV-1-283x160.jpg",
-date: "20140809"
-},{                          
-url: "http://www.cinetransat.ch/2014/date/10-aout/#films_first",
+img: "imageVideoramaIV-1-283x160.jpg",
+date: "20140809",
+time: "20:00"
+},{
+url: "10-aout",
 title: "Soirée rattrapage",
-img: "http://www.cinetransat.ch/2014/wp-content/uploads/imagerattrapage-283x160.jpg",
-date: "20140810"
-},{                          
-url: "http://www.cinetransat.ch/2014/date/14-aout/#films_first",
+img: "imagerattrapage-283x160.jpg",
+date: "20140810",
+time: "20:00"
+},{
+url: "14-aout",
 title: "Carmen",
-img: "http://www.cinetransat.ch/2014/wp-content/uploads/image-carmen-283x160.jpg",
-date: "20140814"
-},{                          
-url: "http://www.cinetransat.ch/2014/date/15-aout/#films_first",
+img: "image-carmen-283x160.jpg",
+date: "20140814",
+time: "20:00"
+},{
+url: "15-aout",
 title: "Almanya",
-img: "http://www.cinetransat.ch/2014/wp-content/uploads/image-almanya-283x160.jpg",
-date: "20140815"
-},{      
-url: "http://www.cinetransat.ch/2014/date/16-aout/#films_first",
+img: "image-almanya-283x160.jpg",
+date: "20140815",
+time: "20:00"
+},{
+url: "16-aout",
 title: "Om Shanti Om",
-img: "http://www.cinetransat.ch/2014/wp-content/uploads/image-omshantiom-283x160.jpg",
-date: "20140816"
-},{                           
-url: "http://www.cinetransat.ch/2014/date/17-aout/#films_first",
+img: "image-omshantiom-283x160.jpg",
+date: "20140816",
+time: "20:00"
+},{
+url: "17-aout",
 title: "Mamma Mia",
-img: "http://www.cinetransat.ch/2014/wp-content/uploads/image-mammamia-283x160.jpg",
-date: "20140817"                          
-}];
-console.log(data);
+img: "image-mammamia-283x160.jpg",
+date: "20140817" ,
+time: "20:00"                         
+}]};
+
+        var displayMovies = function() {
+            var template = $('#template').html();
+            Mustache.parse(template);
+            var rendered = Mustache.render(template, data);
+            $('#movies').html(rendered);
+        }
+
+        $(document).ready(displayMovies);
 	</script>
 </body>
 </html>
