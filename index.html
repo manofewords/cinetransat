@@ -1,0 +1,594 @@
+<html>
+<head>
+	<title>Cinétransat 2014</title>
+</head>
+<body>
+	<div id="movies"></div>
+	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script>
+/*
+http://doodle.com/create?
+
+20140708=22%3A00+BRA-GER&20140709=22%3A00+NED-ARG&type=date&levels=3&title=World+Cup+2014+-+We+enjoy+the+matches+together&description=I+would+like+to+enjoy+the+following+World-Cup+matches+with+you%3A%0A%0A-+08.07.+22%3A00+Brazil+-+Germany%0A-+09.07.+22%3A00+Netherlands+-+Argentina%0A&location=
+
+{dateYYYYMMDD}={HH}:{MM}+{eventName}&type=date&levels=3&title=Cinétransat&description=T'as+envie+de+venir+voir+les+films+suivants+avec+moi?&location=
+
+
+: => %3A
+*/
+
+/*
+
+<div id="post-143" class="element-item col-sm-4 films" style="position: absolute; left: 0px; top: 0px;">
+<a href="http://www.cinetransat.ch/2014/date/10-juillet/#films_first"><div class="item corner-rad white">
+<div class="corner-sheet" style="bottom:15px;"></div>
+<div class="title-projet">Ferris Bueller’s Day Off</div>
+<div class="vignette-grid">
+<img src="http://www.cinetransat.ch/2014/wp-content/uploads/ferris-bueller_00414796-283x160.jpg" alt="" style="width:100%; height:160px">
+</div>
+<div class="date">
+10/07/2014                             </div>
+</div></a>
+</div><!--END OF ITEM-->
+
+<div id="post-144" class="element-item col-sm-4 films" style="position: absolute; left: 323px; top: 0px;">
+<a href="http://www.cinetransat.ch/2014/date/11-juillet/#films_first"><div class="item corner-rad white">
+<div class="corner-sheet" style="bottom:15px;"></div>
+<div class="title-projet">Cashback</div>
+<div class="vignette-grid">
+<img src="http://www.cinetransat.ch/2014/wp-content/uploads/imagecashback-283x160.png" alt="" style="width:100%; height:160px">
+</div>
+<div class="date">
+11/07/2014                             </div>
+</div></a>
+</div><!--END OF ITEM-->
+
+<div id="post-150" class="element-item col-sm-4 films" style="position: absolute; left: 646px; top: 0px;">
+<a href="http://www.cinetransat.ch/2014/date/12-juillet/#films_first"><div class="item corner-rad white">
+<div class="corner-sheet" style="bottom:15px;"></div>
+<div class="title-projet">Back to the future II</div>
+<div class="vignette-grid">
+<img src="http://www.cinetransat.ch/2014/wp-content/uploads/back-to-the-future--283x160.jpg" alt="" style="width:100%; height:160px">
+</div>
+<div class="date">
+12/07/2014                             </div>
+</div></a>
+</div><!--END OF ITEM-->
+
+<div id="post-154" class="element-item col-sm-4 films" style="position: absolute; left: 0px; top: 255px;">
+<a href="http://www.cinetransat.ch/2014/date/13-juillet/#films_first"><div class="item corner-rad white">
+<div class="corner-sheet" style="bottom:15px;"></div>
+<div class="title-projet">À bout de souffle</div>
+<div class="vignette-grid">
+<img src="http://www.cinetransat.ch/2014/wp-content/uploads/a-bout-de-souffle-godard-283x160.jpg" alt="" style="width:100%; height:160px">
+</div>
+<div class="date">
+13/07/2014                             </div>
+</div></a>
+</div><!--END OF ITEM-->
+<div id="post-230" class="element-item col-sm-4 courts_metrages" style="position: absolute; display: none;">
+<a href="http://www.cinetransat.ch/2014/date/13-juillet/#courts_metrages_first"><div class="item corner-rad white">
+<div class="corner-sheet" style="bottom:15px;"></div>
+<div class="title-projet">One minute puberty</div>
+<div class="vignette-grid">
+<img src="http://www.cinetransat.ch/2014/wp-content/uploads/1minpuberty-283x160.png" alt="" style="width:100%; height:160px">
+</div>
+<div class="date">
+13/07/2014                             </div>
+</div></a>
+</div><!--END OF ITEM-->
+<div id="post-200" class="element-item col-sm-4 films" style="position: absolute; left: 323px; top: 255px;">
+<a href="http://www.cinetransat.ch/2014/date/17-juillet/#films_first"><div class="item corner-rad white">
+<div class="corner-sheet" style="bottom:15px;"></div>
+<div class="title-projet">Wadjda</div>
+<div class="vignette-grid">
+<img src="http://www.cinetransat.ch/2014/wp-content/uploads/image-Wadjda-283x160.jpg" alt="" style="width:100%; height:160px">
+</div>
+<div class="date">
+17/07/2014                             </div>
+</div></a>
+</div><!--END OF ITEM-->
+<div id="post-351" class="element-item col-sm-4 soirees_partenaires" style="position: absolute; display: none;">
+<a href="http://www.cinetransat.ch/2014/date/17-juillet/#soirees_partenaires_first"><div class="item corner-rad white">
+<div class="corner-sheet" style="bottom:15px;"></div>
+<div class="title-projet">Soirée «&nbsp;genre et sports&nbsp;»</div>
+<div class="vignette-grid">
+<img src="http://www.cinetransat.ch/2014/wp-content/uploads/image-genre-283x160.jpg" alt="" style="width:100%; height:160px">
+</div>
+<div class="date">
+17/07/2014                             </div>
+</div></a>
+</div><!--END OF ITEM-->
+<div id="post-231" class="element-item col-sm-4 courts_metrages" style="position: absolute; display: none;">
+<a href="http://www.cinetransat.ch/2014/date/18-juillet/#courts_metrages_first"><div class="item corner-rad white">
+<div class="corner-sheet" style="bottom:15px;"></div>
+<div class="title-projet">FC Murmeli</div>
+<div class="vignette-grid">
+<img src="http://www.cinetransat.ch/2014/wp-content/uploads/FC_Murmeli_1-283x160.jpg" alt="" style="width:100%; height:160px">
+</div>
+<div class="date">
+18/07/2014                             </div>
+</div></a>
+</div><!--END OF ITEM-->
+<div id="post-353" class="element-item col-sm-4 soirees_partenaires" style="position: absolute; display: none;">
+<a href="http://www.cinetransat.ch/2014/date/18-juillet/#soirees_partenaires_first"><div class="item corner-rad white">
+<div class="corner-sheet" style="bottom:15px;"></div>
+<div class="title-projet">Soirée Hôpiclowns</div>
+<div class="vignette-grid">
+<img src="http://www.cinetransat.ch/2014/wp-content/uploads/calendrier-2012-Emilio-et-Anatole-283x160.jpg" alt="" style="width:100%; height:160px">
+</div>
+<div class="date">
+18/07/2014                             </div>
+</div></a>
+</div><!--END OF ITEM-->
+<div id="post-201" class="element-item col-sm-4 films" style="position: absolute; left: 646px; top: 255px;">
+<a href="http://www.cinetransat.ch/2014/date/18-juillet/#films_first"><div class="item corner-rad white">
+<div class="corner-sheet" style="bottom:15px;"></div>
+<div class="title-projet">Groundhog Day</div>
+<div class="vignette-grid">
+<img src="http://www.cinetransat.ch/2014/wp-content/uploads/image-groundhogday1-283x160.jpg" alt="" style="width:100%; height:160px">
+</div>
+<div class="date">
+18/07/2014                             </div>
+</div></a>
+</div><!--END OF ITEM-->
+<div id="post-202" class="element-item col-sm-4 films" style="position: absolute; left: 0px; top: 510px;">
+<a href="http://www.cinetransat.ch/2014/date/19-juillet/#films_first"><div class="item corner-rad white">
+<div class="corner-sheet" style="bottom:15px;"></div>
+<div class="title-projet">Alien</div>
+<div class="vignette-grid">
+<img src="http://www.cinetransat.ch/2014/wp-content/uploads/image-alien-283x160.jpg" alt="" style="width:100%; height:160px">
+</div>
+<div class="date">
+19/07/2014                             </div>
+</div></a>
+</div><!--END OF ITEM-->
+<div id="post-232" class="element-item col-sm-4 courts_metrages" style="position: absolute; display: none;">
+<a href="http://www.cinetransat.ch/2014/date/19-juillet/#courts_metrages_first"><div class="item corner-rad white">
+<div class="corner-sheet" style="bottom:15px;"></div>
+<div class="title-projet">Un enfant commode</div>
+<div class="vignette-grid">
+<img src="http://www.cinetransat.ch/2014/wp-content/uploads/Enfant_commode-283x160.jpg" alt="" style="width:100%; height:160px">
+</div>
+<div class="date">
+19/07/2014                             </div>
+</div></a>
+</div><!--END OF ITEM-->
+<div id="post-317" class="element-item col-sm-4 soiree_a_theme" style="position: absolute; display: none;">
+<a href="http://www.cinetransat.ch/2014/date/19-juillet/#soiree_a_theme_first"><div class="item corner-rad white">
+<div class="corner-sheet" style="bottom:15px;"></div>
+<div class="title-projet">Soirée «&nbsp;Fais-moi peur!&nbsp;»</div>
+<div class="vignette-grid">
+<img src="http://www.cinetransat.ch/2014/wp-content/uploads/soirée-fais-moi-peur--283x160.jpg" alt="" style="width:100%; height:160px">
+</div>
+<div class="date">
+19/07/2014                             </div>
+</div></a>
+</div><!--END OF ITEM-->
+<div id="post-203" class="element-item col-sm-4 films" style="position: absolute; left: 323px; top: 510px;">
+<a href="http://www.cinetransat.ch/2014/date/20-juillet/#films_first"><div class="item corner-rad white">
+<div class="corner-sheet" style="bottom:15px;"></div>
+<div class="title-projet">Soirée courts métrages</div>
+<div class="vignette-grid">
+<img src="http://www.cinetransat.ch/2014/wp-content/uploads/imagecourts-283x160.jpg" alt="" style="width:100%; height:160px">
+</div>
+<div class="date">
+20/07/2014                             </div>
+</div></a>
+</div><!--END OF ITEM-->
+<div id="post-359" class="element-item col-sm-4 courts_metrages" style="position: absolute; display: none;">
+<a href="http://www.cinetransat.ch/2014/date/24-juillet/#courts_metrages_first"><div class="item corner-rad white">
+<div class="corner-sheet" style="bottom:15px;"></div>
+<div class="title-projet">L’étrange disparition de M. Walter Werner</div>
+<div class="vignette-grid">
+<img src="http://www.cinetransat.ch/2014/wp-content/uploads/Letrange_disparition_de_Walter_Werner-283x160.jpg" alt="" style="width:100%; height:160px">
+</div>
+<div class="date">
+24/07/2014                             </div>
+</div></a>
+</div><!--END OF ITEM-->
+<div id="post-205" class="element-item col-sm-4 films" style="position: absolute; left: 646px; top: 510px;">
+<a href="http://www.cinetransat.ch/2014/date/24-juillet/#films_first"><div class="item corner-rad white">
+<div class="corner-sheet" style="bottom:15px;"></div>
+<div class="title-projet">C.R.A.Z.Y</div>
+<div class="vignette-grid">
+<img src="http://www.cinetransat.ch/2014/wp-content/uploads/image-crazy-283x160.jpg" alt="" style="width:100%; height:160px">
+</div>
+<div class="date">
+24/07/2014                             </div>
+</div></a>
+</div><!--END OF ITEM-->
+<div id="post-206" class="element-item col-sm-4 films" style="position: absolute; left: 0px; top: 765px;">
+<a href="http://www.cinetransat.ch/2014/date/25-juillet/#films_first"><div class="item corner-rad white">
+<div class="corner-sheet" style="bottom:15px;"></div>
+<div class="title-projet">Total Recall</div>
+<div class="vignette-grid">
+<img src="http://www.cinetransat.ch/2014/wp-content/uploads/image-totarecall-283x160.jpg" alt="" style="width:100%; height:160px">
+</div>
+<div class="date">
+25/07/2014                             </div>
+</div></a>
+</div><!--END OF ITEM-->
+<div id="post-342" class="element-item col-sm-4 courts_metrages" style="position: absolute; display: none;">
+<a href="http://www.cinetransat.ch/2014/date/25-juillet/#courts_metrages_first"><div class="item corner-rad white">
+<div class="corner-sheet" style="bottom:15px;"></div>
+<div class="title-projet">Lauréats du concours CinéCivic 2013</div>
+<div class="vignette-grid">
+<img src="http://www.cinetransat.ch/2014/wp-content/uploads/imagecinecivic-283x160.jpg" alt="" style="width:100%; height:160px">
+</div>
+<div class="date">
+25/07/2014                             </div>
+</div></a>
+</div><!--END OF ITEM-->
+<div id="post-207" class="element-item col-sm-4 films" style="position: absolute; left: 323px; top: 765px;">
+<a href="http://www.cinetransat.ch/2014/date/26-juillet/#films_first"><div class="item corner-rad white">
+<div class="corner-sheet" style="bottom:15px;"></div>
+<div class="title-projet">Saturday Night Fever</div>
+<div class="vignette-grid">
+<img src="http://www.cinetransat.ch/2014/wp-content/uploads/image-saturdaynightfever-283x160.jpg" alt="" style="width:100%; height:160px">
+</div>
+<div class="date">
+26/07/2014                             </div>
+</div></a>
+</div><!--END OF ITEM-->
+<div id="post-233" class="element-item col-sm-4 courts_metrages" style="position: absolute; display: none;">
+<a href="http://www.cinetransat.ch/2014/date/26-juillet/#courts_metrages_first"><div class="item corner-rad white">
+<div class="corner-sheet" style="bottom:15px;"></div>
+<div class="title-projet">What’s Virgin Mean ?</div>
+<div class="vignette-grid">
+<img src="http://www.cinetransat.ch/2014/wp-content/uploads/Whats-virgin-mean-PS5-283x160.png" alt="" style="width:100%; height:160px">
+</div>
+<div class="date">
+26/07/2014                             </div>
+</div></a>
+</div><!--END OF ITEM-->
+<div id="post-318" class="element-item col-sm-4 soiree_a_theme" style="position: absolute; display: none;">
+<a href="http://www.cinetransat.ch/2014/date/26-juillet/#soiree_a_theme_first"><div class="item corner-rad white">
+<div class="corner-sheet" style="bottom:15px;"></div>
+<div class="title-projet">Soirée disco</div>
+<div class="vignette-grid">
+<img src="http://www.cinetransat.ch/2014/wp-content/uploads/disco-ball-283x160.jpg" alt="" style="width:100%; height:160px">
+</div>
+<div class="date">
+26/07/2014                             </div>
+</div></a>
+</div><!--END OF ITEM-->
+<div id="post-208" class="element-item col-sm-4 films" style="position: absolute; left: 646px; top: 765px;">
+<a href="http://www.cinetransat.ch/2014/date/27-juillet/#films_first"><div class="item corner-rad white">
+<div class="corner-sheet" style="bottom:15px;"></div>
+<div class="title-projet">Kiki la petite sorcière</div>
+<div class="vignette-grid">
+<img src="http://www.cinetransat.ch/2014/wp-content/uploads/image-Kiki-283x160.jpg" alt="" style="width:100%; height:160px">
+</div>
+<div class="date">
+27/07/2014                             </div>
+</div></a>
+</div><!--END OF ITEM-->
+<div id="post-234" class="element-item col-sm-4 courts_metrages" style="position: absolute; display: none;">
+<a href="http://www.cinetransat.ch/2014/date/27-juillet/#courts_metrages_first"><div class="item corner-rad white">
+<div class="corner-sheet" style="bottom:15px;"></div>
+<div class="title-projet">Fly me baby</div>
+<div class="vignette-grid">
+<img src="http://www.cinetransat.ch/2014/wp-content/uploads/FlymeBaby-283x160.jpg" alt="" style="width:100%; height:160px">
+</div>
+<div class="date">
+27/07/2014                             </div>
+</div></a>
+</div><!--END OF ITEM-->
+<div id="post-237" class="element-item col-sm-4 courts_metrages" style="position: absolute; display: none;">
+<a href="http://www.cinetransat.ch/2014/date/31-juillet/#courts_metrages_first"><div class="item corner-rad white">
+<div class="corner-sheet" style="bottom:15px;"></div>
+<div class="title-projet">A girl named Elastika</div>
+<div class="vignette-grid">
+<img src="http://www.cinetransat.ch/2014/wp-content/uploads/a_girl_named_elastika-283x160.jpg" alt="" style="width:100%; height:160px">
+</div>
+<div class="date">
+31/07/2014                             </div>
+</div></a>
+</div><!--END OF ITEM-->
+<div id="post-209" class="element-item col-sm-4 films" style="position: absolute; left: 0px; top: 1020px;">
+<a href="http://www.cinetransat.ch/2014/date/31-juillet/#films_first"><div class="item corner-rad white">
+<div class="corner-sheet" style="bottom:15px;"></div>
+<div class="title-projet">Whale rider</div>
+<div class="vignette-grid">
+<img src="http://www.cinetransat.ch/2014/wp-content/uploads/image-whalerider-283x160.jpg" alt="" style="width:100%; height:160px">
+</div>
+<div class="date">
+31/07/2014                             </div>
+</div></a>
+</div><!--END OF ITEM-->
+<div id="post-238" class="element-item col-sm-4 courts_metrages" style="position: absolute; display: none;">
+<a href="http://www.cinetransat.ch/2014/date/1-aout/#courts_metrages_first"><div class="item corner-rad white">
+<div class="corner-sheet" style="bottom:15px;"></div>
+<div class="title-projet">Chopper</div>
+<div class="vignette-grid">
+<img src="http://www.cinetransat.ch/2014/wp-content/uploads/Chopper-283x160.jpg" alt="" style="width:100%; height:160px">
+</div>
+<div class="date">
+01/08/2014                             </div>
+</div></a>
+</div><!--END OF ITEM-->
+<div id="post-210" class="element-item col-sm-4 films" style="position: absolute; left: 323px; top: 1020px;">
+<a href="http://www.cinetransat.ch/2014/date/1-aout/#films_first"><div class="item corner-rad white">
+<div class="corner-sheet" style="bottom:15px;"></div>
+<div class="title-projet">The Usual Suspects</div>
+<div class="vignette-grid">
+<img src="http://www.cinetransat.ch/2014/wp-content/uploads/image-theusualsuspects-283x160.jpg" alt="" style="width:100%; height:160px">
+</div>
+<div class="date">
+01/08/2014                             </div>
+</div></a>
+</div><!--END OF ITEM-->
+<div id="post-211" class="element-item col-sm-4 films" style="position: absolute; left: 646px; top: 1020px;">
+<a href="http://www.cinetransat.ch/2014/date/2-aout/#films_first"><div class="item corner-rad white">
+<div class="corner-sheet" style="bottom:15px;"></div>
+<div class="title-projet">Notting Hill</div>
+<div class="vignette-grid">
+<img src="http://www.cinetransat.ch/2014/wp-content/uploads/image-nottinghill-283x160.jpg" alt="" style="width:100%; height:160px">
+</div>
+<div class="date">
+02/08/2014                             </div>
+</div></a>
+</div><!--END OF ITEM-->
+<div id="post-319" class="element-item col-sm-4 soiree_a_theme" style="position: absolute; display: none;">
+<a href="http://www.cinetransat.ch/2014/date/2-aout/#soiree_a_theme_first"><div class="item corner-rad white">
+<div class="corner-sheet" style="bottom:15px;"></div>
+<div class="title-projet">Soirée LOVE</div>
+<div class="vignette-grid">
+<img src="http://www.cinetransat.ch/2014/wp-content/uploads/c1660-283x160.jpg" alt="" style="width:100%; height:160px">
+</div>
+<div class="date">
+02/08/2014                             </div>
+</div></a>
+</div><!--END OF ITEM-->
+<div id="post-239" class="element-item col-sm-4 courts_metrages" style="position: absolute; display: none;">
+<a href="http://www.cinetransat.ch/2014/date/2-aout/#courts_metrages_first"><div class="item corner-rad white">
+<div class="corner-sheet" style="bottom:15px;"></div>
+<div class="title-projet">Bryllupsdagen</div>
+<div class="vignette-grid">
+<img src="http://www.cinetransat.ch/2014/wp-content/uploads/bryllupsdagen_1-283x160.png" alt="" style="width:100%; height:160px">
+</div>
+<div class="date">
+02/08/2014                             </div>
+</div></a>
+</div><!--END OF ITEM-->
+<div id="post-320" class="element-item col-sm-4 soiree_a_theme" style="position: absolute; display: none;">
+<a href="http://www.cinetransat.ch/2014/date/3-aout/#soiree_a_theme_first"><div class="item corner-rad white">
+<div class="corner-sheet" style="bottom:15px;"></div>
+<div class="title-projet">Concours de pique-niques</div>
+<div class="vignette-grid">
+<img src="http://www.cinetransat.ch/2014/wp-content/uploads/47-nash-bed-picnic-283x160.jpg" alt="" style="width:100%; height:160px">
+</div>
+<div class="date">
+03/08/2014                             </div>
+</div></a>
+</div><!--END OF ITEM-->
+<div id="post-240" class="element-item col-sm-4 courts_metrages" style="position: absolute; display: none;">
+<a href="http://www.cinetransat.ch/2014/date/3-aout/#courts_metrages_first"><div class="item corner-rad white">
+<div class="corner-sheet" style="bottom:15px;"></div>
+<div class="title-projet">Nuit Blanche</div>
+<div class="vignette-grid">
+<img src="http://www.cinetransat.ch/2014/wp-content/uploads/Nuit_blanche-PS2-283x160.png" alt="" style="width:100%; height:160px">
+</div>
+<div class="date">
+03/08/2014                             </div>
+</div></a>
+</div><!--END OF ITEM-->
+<div id="post-212" class="element-item col-sm-4 films" style="position: absolute; left: 0px; top: 1275px;">
+<a href="http://www.cinetransat.ch/2014/date/3-aout/#films_first"><div class="item corner-rad white">
+<div class="corner-sheet" style="bottom:15px;"></div>
+<div class="title-projet">The Artist</div>
+<div class="vignette-grid">
+<img src="http://www.cinetransat.ch/2014/wp-content/uploads/image-theartist-283x160.jpg" alt="" style="width:100%; height:160px">
+</div>
+<div class="date">
+03/08/2014                             </div>
+</div></a>
+</div><!--END OF ITEM-->
+<div id="post-213" class="element-item col-sm-4 films" style="position: absolute; left: 323px; top: 1275px;">
+<a href="http://www.cinetransat.ch/2014/date/7-aout/#films_first"><div class="item corner-rad white">
+<div class="corner-sheet" style="bottom:15px;"></div>
+<div class="title-projet">Invictus</div>
+<div class="vignette-grid">
+<img src="http://www.cinetransat.ch/2014/wp-content/uploads/image-invictus-283x160.jpg" alt="" style="width:100%; height:160px">
+</div>
+<div class="date">
+07/08/2014                             </div>
+</div></a>
+</div><!--END OF ITEM-->
+<div id="post-349" class="element-item col-sm-4 soirees_partenaires" style="position: absolute; display: none;">
+<a href="http://www.cinetransat.ch/2014/date/7-aout/#soirees_partenaires_first"><div class="item corner-rad white">
+<div class="corner-sheet" style="bottom:15px;"></div>
+<div class="title-projet">Soirée hommage à Mandela</div>
+<div class="vignette-grid">
+<img src="http://www.cinetransat.ch/2014/wp-content/uploads/image-mandela-283x160.jpg" alt="" style="width:100%; height:160px">
+</div>
+<div class="date">
+07/08/2014                             </div>
+</div></a>
+</div><!--END OF ITEM-->
+<div id="post-475" class="element-item col-sm-4 films_suede" style="position: absolute; display: none;">
+<a href="http://www.cinetransat.ch/2014/date/8-aout/#films_suede_first"><div class="item corner-rad white">
+<div class="corner-sheet" style="bottom:15px;"></div>
+<div class="title-projet">LE GRAND BLEU (SUÉDÉ PAR WILD SIDE PROD &amp;CO) / 2012</div>
+<div class="vignette-grid">
+<img src="http://www.cinetransat.ch/2014/wp-content/uploads/suede-grandbleu1-283x160.jpg" alt="" style="width:100%; height:160px">
+</div>
+<div class="date">
+08/08/2014                             </div>
+</div></a>
+</div><!--END OF ITEM-->
+<div id="post-478" class="element-item col-sm-4 films_suede" style="position: absolute; display: none;">
+<a href="http://www.cinetransat.ch/2014/date/8-aout/#films_suede_first"><div class="item corner-rad white">
+<div class="corner-sheet" style="bottom:15px;"></div>
+<div class="title-projet">LE GRAND BLEU (SUÉDÉ PAR THE KILLER RABBIT) / 2012</div>
+<div class="vignette-grid">
+<img src="http://www.cinetransat.ch/2014/wp-content/uploads/suede-grandbleu2-283x160.jpg" alt="" style="width:100%; height:160px">
+</div>
+<div class="date">
+08/08/2014                             </div>
+</div></a>
+</div><!--END OF ITEM-->
+<div id="post-241" class="element-item col-sm-4 courts_metrages" style="position: absolute; display: none;">
+<a href="http://www.cinetransat.ch/2014/date/8-aout/#courts_metrages_first"><div class="item corner-rad white">
+<div class="corner-sheet" style="bottom:15px;"></div>
+<div class="title-projet">Les voleurs de cartes</div>
+<div class="vignette-grid">
+<img src="http://www.cinetransat.ch/2014/wp-content/uploads/Les-voleurs-de-cartes-PS1-283x160.png" alt="" style="width:100%; height:160px">
+</div>
+<div class="date">
+08/08/2014                             </div>
+</div></a>
+</div><!--END OF ITEM-->
+<div id="post-480" class="element-item col-sm-4 films_suede" style="position: absolute; display: none;">
+<a href="http://www.cinetransat.ch/2014/date/8-aout/#films_suede_first"><div class="item corner-rad white">
+<div class="corner-sheet" style="bottom:15px;"></div>
+<div class="title-projet">LE GRAND BLEU (SUÉDÉ PAR JONATHAN STOPPELE) / 2012</div>
+<div class="vignette-grid">
+<img src="http://www.cinetransat.ch/2014/wp-content/uploads/suede-grandbleu3-283x160.jpg" alt="" style="width:100%; height:160px">
+</div>
+<div class="date">
+08/08/2014                             </div>
+</div></a>
+</div><!--END OF ITEM-->
+<div id="post-214" class="element-item col-sm-4 films" style="position: absolute; left: 646px; top: 1275px;">
+<a href="http://www.cinetransat.ch/2014/date/8-aout/#films_first"><div class="item corner-rad white">
+<div class="corner-sheet" style="bottom:15px;"></div>
+<div class="title-projet">Le grand bleu</div>
+<div class="vignette-grid">
+<img src="http://www.cinetransat.ch/2014/wp-content/uploads/image-legrandbleu-283x160.jpg" alt="" style="width:100%; height:160px">
+</div>
+<div class="date">
+08/08/2014                             </div>
+</div></a>
+</div><!--END OF ITEM-->
+<div id="post-215" class="element-item col-sm-4 films" style="position: absolute; left: 0px; top: 1530px;">
+<a href="http://www.cinetransat.ch/2014/date/9-aout/#films_first"><div class="item corner-rad white">
+<div class="corner-sheet" style="bottom:15px;"></div>
+<div class="title-projet">Videorama – La Machine à Clips IV</div>
+<div class="vignette-grid">
+<img src="http://www.cinetransat.ch/2014/wp-content/uploads/imageVideoramaIV-1-283x160.jpg" alt="" style="width:100%; height:160px">
+</div>
+<div class="date">
+09/08/2014                             </div>
+</div></a>
+</div><!--END OF ITEM-->
+<div id="post-217" class="element-item col-sm-4 films" style="position: absolute; left: 323px; top: 1530px;">
+<a href="http://www.cinetransat.ch/2014/date/10-aout/#films_first"><div class="item corner-rad white">
+<div class="corner-sheet" style="bottom:15px;"></div>
+<div class="title-projet">Soirée rattrapage</div>
+<div class="vignette-grid">
+<img src="http://www.cinetransat.ch/2014/wp-content/uploads/imagerattrapage-283x160.jpg" alt="" style="width:100%; height:160px">
+</div>
+<div class="date">
+10/08/2014                             </div>
+</div></a>
+</div><!--END OF ITEM-->
+<div id="post-218" class="element-item col-sm-4 films" style="position: absolute; left: 646px; top: 1530px;">
+<a href="http://www.cinetransat.ch/2014/date/14-aout/#films_first"><div class="item corner-rad white">
+<div class="corner-sheet" style="bottom:15px;"></div>
+<div class="title-projet">Carmen</div>
+<div class="vignette-grid">
+<img src="http://www.cinetransat.ch/2014/wp-content/uploads/image-carmen-283x160.jpg" alt="" style="width:100%; height:160px">
+</div>
+<div class="date">
+14/08/2014                             </div>
+</div></a>
+</div><!--END OF ITEM-->
+<div id="post-242" class="element-item col-sm-4 courts_metrages" style="position: absolute; display: none;">
+<a href="http://www.cinetransat.ch/2014/date/14-aout/#courts_metrages_first"><div class="item corner-rad white">
+<div class="corner-sheet" style="bottom:15px;"></div>
+<div class="title-projet">At the Opera</div>
+<div class="vignette-grid">
+<img src="http://www.cinetransat.ch/2014/wp-content/uploads/At_the_opera-PS3-283x160.png" alt="" style="width:100%; height:160px">
+</div>
+<div class="date">
+14/08/2014                             </div>
+</div></a>
+</div><!--END OF ITEM-->
+<div id="post-243" class="element-item col-sm-4 courts_metrages" style="position: absolute; display: none;">
+<a href="http://www.cinetransat.ch/2014/date/15-aout/#courts_metrages_first"><div class="item corner-rad white">
+<div class="corner-sheet" style="bottom:15px;"></div>
+<div class="title-projet">Les insolences d’une caméra</div>
+<div class="vignette-grid">
+<img src="http://www.cinetransat.ch/2014/wp-content/uploads/Les-insolences-dune-caméra_1-283x160.jpeg" alt="" style="width:100%; height:160px">
+</div>
+<div class="date">
+15/08/2014                             </div>
+</div></a>
+</div><!--END OF ITEM-->
+<div id="post-346" class="element-item col-sm-4 soirees_partenaires" style="position: absolute; display: none;">
+<a href="http://www.cinetransat.ch/2014/date/15-aout/#soirees_partenaires_first"><div class="item corner-rad white">
+<div class="corner-sheet" style="bottom:15px;"></div>
+<div class="title-projet">Soirée «&nbsp;diversité culturelle&nbsp;»</div>
+<div class="vignette-grid">
+<img src="http://www.cinetransat.ch/2014/wp-content/uploads/image-diversite-283x160.jpg" alt="" style="width:100%; height:160px">
+</div>
+<div class="date">
+15/08/2014                             </div>
+</div></a>
+</div><!--END OF ITEM-->
+<div id="post-219" class="element-item col-sm-4 films" style="position: absolute; left: 0px; top: 1785px;">
+<a href="http://www.cinetransat.ch/2014/date/15-aout/#films_first"><div class="item corner-rad white">
+<div class="corner-sheet" style="bottom:15px;"></div>
+<div class="title-projet">Almanya</div>
+<div class="vignette-grid">
+<img src="http://www.cinetransat.ch/2014/wp-content/uploads/image-almanya-283x160.jpg" alt="" style="width:100%; height:160px">
+</div>
+<div class="date">
+15/08/2014                             </div>
+</div></a>
+</div><!--END OF ITEM-->
+<div id="post-321" class="element-item col-sm-4 soiree_a_theme" style="position: absolute; display: none;">
+<a href="http://www.cinetransat.ch/2014/date/16-aout/#soiree_a_theme_first"><div class="item corner-rad white">
+<div class="corner-sheet" style="bottom:15px;"></div>
+<div class="title-projet">Soirée Bollywood</div>
+<div class="vignette-grid">
+<img src="http://www.cinetransat.ch/2014/wp-content/uploads/devdas-283x160.jpg" alt="" style="width:100%; height:160px">
+</div>
+<div class="date">
+16/08/2014                             </div>
+</div></a>
+</div><!--END OF ITEM-->
+<div id="post-225" class="element-item col-sm-4 films" style="position: absolute; left: 323px; top: 1785px;">
+<a href="http://www.cinetransat.ch/2014/date/16-aout/#films_first"><div class="item corner-rad white">
+<div class="corner-sheet" style="bottom:15px;"></div>
+<div class="title-projet">Om Shanti Om</div>
+<div class="vignette-grid">
+<img src="http://www.cinetransat.ch/2014/wp-content/uploads/image-omshantiom-283x160.jpg" alt="" style="width:100%; height:160px">
+</div>
+<div class="date">
+16/08/2014                             </div>
+</div></a>
+</div><!--END OF ITEM-->
+<div id="post-226" class="element-item col-sm-4 films" style="position: absolute; left: 646px; top: 1785px;">
+<a href="http://www.cinetransat.ch/2014/date/17-aout/#films_first"><div class="item corner-rad white">
+<div class="corner-sheet" style="bottom:15px;"></div>
+<div class="title-projet">Mamma Mia</div>
+<div class="vignette-grid">
+<img src="http://www.cinetransat.ch/2014/wp-content/uploads/image-mammamia-283x160.jpg" alt="" style="width:100%; height:160px">
+</div>
+<div class="date">
+17/08/2014                             </div>
+</div></a>
+</div><!--END OF ITEM-->
+<div id="post-236" class="element-item col-sm-4 courts_metrages" style="position: absolute; display: none;">
+<a href="http://www.cinetransat.ch/2014/date/17-aout/#courts_metrages_first"><div class="item corner-rad white">
+<div class="corner-sheet" style="bottom:15px;"></div>
+<div class="title-projet">Fluffy Mc Cloud</div>
+<div class="vignette-grid">
+<img src="http://www.cinetransat.ch/2014/wp-content/uploads/fluffy_mc_cloud_1-283x160.jpg" alt="" style="width:100%; height:160px">
+</div>
+<div class="date">
+17/08/2014                             </div>
+</div></a>
+</div><!--END OF ITEM-->
+<!-- PAST DATES --------------------------------------------->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+</div>
+
+*/
+
+	</script>
+</body>
+</html>
