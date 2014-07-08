@@ -3,25 +3,135 @@
 <head>
     <meta charset="utf-8">
 	<title>Cinétransat 2014</title>
+    <link href="http://fonts.googleapis.com/css?family=Arvo" rel="stylesheet" type="text/css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.css" rel="stylesheet" type="text/css">
+    <style>
+        body {
+            background: #82afaf;
+            text-align: center;
+            font-family: "Arvo", serif;
+            font-weight: 400;
+            font-size: 1em;
+        }
+        h1 {
+            font-size: 3em;
+            line-height: 2.5em;
+        }
+        section {
+            background: #fefefe;
+        }
+        header,
+        footer {
+            padding: 1em;
+            color: #fefefe;
+        }
+        form {
+            margin: 0 auto;
+        }
+        li {
+            display: inline-block;
+            width: 310px;
+            margin: 2em 1em 0 1em;
+            background: #f4f4f4;
+            -webkit-user-select: none;        
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+        li:hover {
+            color: #ff9b00;
+            background: #eeeeee;
+        }
+        a,
+        a:active,
+        a:focus,
+        a:visited,
+        a:hover {
+            color: #ff9b00;
+            text-decoration: none;
+        }
+        li a {
+            float: right;
+            font-size: 0.8em;
+            margin: 1em;
+        }
+        .title,
+        .date,
+        li img,
+        input[type="checkbox"] {
+            display: block;
+            margin: 1em auto;
+            cursor: pointer;
+        }
+        .title {
+            font-size: 1.5em;
+        }
+        input[type="submit"] {
+            font-family: "Arvo", serif;
+            font-weight: 400;
+            font-size: 2em;
+            padding: 1em;
+            margin: 2em;
+            background: #ff9b00;
+            color: #fefefe;
+            border: 0;
+            -webkit-border-radius: 0;
+            -moz-border-radius: 0;
+            border-radius: 0;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background: #ea8f21;
+        }
+        #logo {
+            text-align: right;
+            padding: 1em;
+        }
+        #logo img {
+            margin-left: 1em;
+        }
+        @media (max-width: 800px) {
+            h1 {
+                font-size: 2em;
+                line-height: 1.5em;
+            }
+            input[type="submit"] {
+                font-size: 1.5em;
+                padding: 1em;
+                margin: 1.5em;
+            }
+        }
+    </style>
 </head>
-<body onload="displayMovies">
-	<form action="http://doodle.com/create" method="GET">
-        <div id="movies"></div>
-        <input type="hidden" name="type" value="date">
-        <input type="hidden" name="levels" value="2">
-        <input type="hidden" name="title" value="Cinétransat">
-        <input type="hidden" name="description" value="Viens voir des films avec moi à Cinétransat!">
-        <input type="hidden" name="location" value="Parc de la Perle du Lac, Genève">
-        <input type="submit" value="J'ai fait mon choix!">
-    </form>
+<body>
+    <header>
+        <h1>Invite tes potes à CinéTransat!</h1>
+    </header>
+    <section>
+    	<form action="http://doodle.com/create" method="GET">
+            <div id="movies"></div>
+            <input type="hidden" name="type" value="date">
+            <input type="hidden" name="levels" value="2">
+            <input type="hidden" name="title" value="CinéTransat">
+            <input type="hidden" name="description" value="Viens voir des films avec moi à CinéTransat!">
+            <input type="hidden" name="location" value="Parc de la Perle du Lac, Genève">
+            <input type="submit" value="J'ai fait mon choix">
+        </form>
+        <p id="logo">powered by <a href="http://www.doodle.com/" target="_blank"><img src="Doodle.png" width="200" height="43" alt="Doodle logo"></a</p>
+    </section>
+    <footer>
+        2014 &ndash; Manuel Hitz
+    </footer>
     <script id="template" type="x-tmpl-mustache">
         <ul>
         {{#movies}}
         <li>
-            {{date}}
-            <a href="http://www.cinetransat.ch/2014/date/{{url}}/#films_first">{{title}}</a>
-            <img src="http://www.cinetransat.ch/2014/wp-content/uploads/{{img}}" alt="{{title}}">
-            <input type="checkbox" name="{{date}}" value="{{time}} {{title}}">
+            <label for="{{date}}">
+                <p class="title">{{title}}</p>
+                <p class="date">{{formattedDate}}</p>
+                <img src="http://www.cinetransat.ch/2014/wp-content/uploads/{{img}}" alt="{{title}}">
+            </label>
+            <input type="checkbox" id="{{date}}" name="{{date}}" value="{{time}} {{title}}">
+            <a href="http://www.cinetransat.ch/2014/date/{{url}}/#films_first" target="_blank">info »</a>
         </li>
         {{/movies}}
         </ul>
@@ -139,7 +249,7 @@ date: "20140808",
 time: "20:00"
 },{
 url: "9-aout",
-title: "Videorama – La Machine à Clips IV",
+title: "La Machine à Clips IV", // title: "Videorama – La Machine à Clips IV",
 img: "imageVideoramaIV-1-283x160.jpg",
 date: "20140809",
 time: "20:00"
@@ -173,7 +283,10 @@ title: "Mamma Mia",
 img: "image-mammamia-283x160.jpg",
 date: "20140817" ,
 time: "20:00"                         
-}]};
+}],
+formattedDate: function() {
+    return this.date.substr(6, 2) + '/' + this.date.substr(4, 2) + '/' + this.date.substr(0, 4);
+}};
 
         var displayMovies = function() {
             var template = $('#template').html();
