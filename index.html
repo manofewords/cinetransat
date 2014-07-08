@@ -26,8 +26,9 @@
             padding: 1em;
             color: #fefefe;
         }
-        form {
+        ul {
             margin: 0 auto;
+            max-width: 1500px; /* max 4 pics per row, because it represents a week (thu, fri, sat, sun) */
         }
         li {
             display: inline-block;
@@ -302,7 +303,11 @@ date: "20140817" ,
 time: "20:41"                         
 }],
 formattedDate: function() {
-    return this.date.substr(6, 2) + '/' + this.date.substr(4, 2) + '/' + this.date.substr(0, 4);
+    var y, m, d;
+    y = this.date.substr(0, 4);
+    m = this.date.substr(4, 2);
+    d = this.date.substr(6, 2)
+    return ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'][(new Date(y, m-1, d)).getDay()] + ' ' + d + '/' + m + '/' + y;
 }};
 
         var displayMovies = function() {
