@@ -2,6 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no">
 	<title>Cinétransat 2014</title>
     <link href="http://fonts.googleapis.com/css?family=Arvo" rel="stylesheet" type="text/css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.css" rel="stylesheet" type="text/css">
@@ -66,11 +67,12 @@
             font-size: 1.5em;
         }
         input[type="submit"] {
+            -webkit-appearance: none;
             font-family: "Arvo", serif;
             font-weight: 400;
             font-size: 2em;
             padding: 1em;
-            margin: 2em;
+            margin: 2em auto;
             background: #ff9b00;
             color: #fefefe;
             border: 0;
@@ -97,7 +99,12 @@
             input[type="submit"] {
                 font-size: 1.5em;
                 padding: 1em;
-                margin: 1.5em;
+                margin: 1.5em auto;
+            }
+        }
+        @media (max-width: 620px) { /* as soon as 2 pics don't fit next to each other... */
+            li {
+                margin: 2em auto 0 auto;
             }
         }
     </style>
@@ -124,9 +131,9 @@
             <input type="hidden" name="title" value="CinéTransat">
             <input type="hidden" name="description" value="Viens voir des films avec moi à CinéTransat!">
             <input type="hidden" name="location" value="Parc de la Perle du Lac, Genève">
-            <input type="submit" value="J'ai fait mon choix">
+            <input type="submit" value="J’ai fait mes choix">
         </form>
-        <p id="logo">powered by <a href="http://www.doodle.com/" target="_blank"><img src="Doodle.png" width="200" height="43" alt="Doodle logo"></a</p>
+        <p id="logo">powered by <a href="http://www.doodle.com/" target="_blank"><img src="Doodle.png" width="200" height="43" alt="Doodle logo"></a></p>
     </section>
     <footer>
         2014 &ndash; Manuel Hitz
@@ -140,7 +147,7 @@
                 <p class="date">{{formattedDate}}</p>
                 <img src="http://www.cinetransat.ch/2014/wp-content/uploads/{{img}}" alt="{{title}}">
             </label>
-            <input type="checkbox" id="{{date}}" name="{{date}}" value="{{time}} {{title}}">
+            <input type="checkbox" checked="checked" id="{{date}}" name="{{date}}" value="{{time}} {{title}}">
             <a href="http://www.cinetransat.ch/2014/date/{{url}}/#films_first" target="_blank">info »</a>
         </li>
         {{/movies}}
