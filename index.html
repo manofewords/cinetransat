@@ -100,6 +100,14 @@
         #logo img {
             margin-left: 1em;
         }
+        #error {
+        	display: none;
+       		padding: 1em;
+       		line-height: 1.5em;
+        }
+        #content {
+        	display: none;
+        }
         @media (max-width: 800px) {
             h1 {
                 font-size: 2em;
@@ -132,7 +140,10 @@
     <header>
         <h1>Invite tes potes à CinéTransat!</h1>
     </header>
-    <section>
+    <section id="error">
+    	
+    </section>
+    <section id="content">
     	<form action="http://doodle.com/create" method="GET">
             <div id="movies"></div>
             <input type="hidden" name="type" value="date">
@@ -328,15 +339,15 @@ formattedDate: function() {
 }};
 
         var displayMovies = function() {
-        	var html;
         	if($.browser.mobile) {
-        		html = 'Malheureusement, <a href="http://doodle.com">Doodle</a> ne supporte pas la fonctionnalité requise pour cette page sur les téléphones mobiles :('; 	
+        		$('#error').html('Malheureusement, <a href="http://doodle.com">Doodle</a> ne supporte pas la fonctionnalité requise pour cette page sur les téléphones mobiles :(').show(); 	
         	} else {
             var template = $('#template').html();
             Mustache.parse(template);
-            html = Mustache.render(template, data);
+            var html = Mustache.render(template, data);
+            $('#movies').html(html).show();
         	}
-        	$('#movies').html(html);
+        	
         }
 
         $(document).ready(displayMovies);
