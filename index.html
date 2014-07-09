@@ -345,7 +345,8 @@ formattedDate: function() {
             var template = $('#template').html();
             Mustache.parse(template);
             var html = Mustache.render(template, data);
-            $('#movies').html(html).show();
+            $('#movies').html(html);
+            $('#content').show();
         	}
         	
         }
