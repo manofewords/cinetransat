@@ -144,7 +144,6 @@
         <h1>Invite tes potes à CinéTransat!</h1>
     </header>
     <section id="error">
-    	
     </section>
     <section id="content">
     	<form action="http://doodle.com/create" method="GET">
@@ -342,12 +341,35 @@ formattedDate: function() {
     return ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'][(new Date(y, m-1, d)).getDay()] + ' ' + d + '/' + m + '/' + y;
 }};
 
+        var dateToString = function(date) {
+            var y = date.getFullYear(),
+                m = (date.getMonth() + 1),
+                d = date.getDate();
+                return y + (m < 10? '0' : '') + m + d; 
+        }
+
         var displayMovies = function() {
-            var template, html;
+            var template, html, i, len, movies, today;
 
         	if($.browser.mobile) {
         	   $('#error').html('Malheureusement, <a href="http://doodle.com">Doodle</a> ne supporte pas la fonctionnalité requise pour cette page sur les téléphones mobiles :(').show(); 	
         	} else {
+                // filter out past dates
+                today = dateToString(new Date());
+                movies = [];
+                for(i = 0, len = data.movies.length; i < len; i++) {
+                    if(data.movies[i].date >= today) {
+                        movies.push(data.movies[i]);
+                    }
+                }
+                data.movies = movies;
+
+                // no movies left
+                if(movies.length === 0) {
+                    $('#error').html("Trop tard! Rendez-vous l'année prochaine ;)").show();
+                    return;
+                }
+
                 template = $('#template').html();
                 Mustache.parse(template);
                 html = Mustache.render(template, data);
@@ -364,11 +386,8 @@ formattedDate: function() {
                     if(data && data.list) {
                         for(i = 0, len = data.list.length; i < len; i++) {
                             forecast = data.list[i];
-                            date = new Date(forecast.dt * 1000);
-                            y = date.getFullYear();
-                            m = (date.getMonth() + 1);
-                            d = date.getDate();
-                            el = $('#weather' + y + (m < 10? '0' : '') + m + d);
+                            date = dateToString(new Date(forecast.dt * 1000));
+                            el = $('#weather' + date);
                             if(el) {
                                 el.html('<img src="http://openweathermap.org/img/w/' + forecast.weather[0].icon + '.png" alt="' + forecast.weather[0].description + '">');
                             }
