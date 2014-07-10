@@ -59,10 +59,12 @@
             color: #ff9b00;
             text-decoration: none;
         }
-        li a {
-            float: right;
+        li a,
+        .weather span {
             font-size: 0.8em;
+            float: right;
             margin: 1.6em;
+            margin-left: 0;
         }
         .title,
         .date,
@@ -389,7 +391,7 @@ formattedDate: function() {
                             date = dateToString(new Date(forecast.dt * 1000));
                             el = $('#weather' + date);
                             if(el) {
-                                el.html('<img src="http://openweathermap.org/img/w/' + forecast.weather[0].icon + '.png" alt="' + forecast.weather[0].description + '">');
+                                el.html('<img src="http://openweathermap.org/img/w/' + forecast.weather[0].icon + '.png" alt="' + forecast.weather[0].description + '"><span>' + Math.round(forecast.temp.day - 272.15) + 'ºC</span>');
                             }
                         }
                     }
