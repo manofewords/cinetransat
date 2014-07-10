@@ -62,11 +62,11 @@
         li a {
             float: right;
             font-size: 0.8em;
-            margin: 1em;
+            margin: 1.6em;
         }
         .title,
         .date,
-        li img,
+        .preview,
         input[type="checkbox"] {
             display: block;
             margin: 1em auto;
@@ -107,6 +107,9 @@
         }
         #content {
         	display: none;
+        }
+        .weather {
+            float: left;
         }
         @media (max-width: 800px) {
             h1 {
@@ -165,9 +168,10 @@
             <label for="{{date}}">
                 <p class="title">{{title}}</p>
                 <p class="date">{{formattedDate}}</p>
-                <img src="http://www.cinetransat.ch/2014/wp-content/uploads/{{img}}" alt="{{title}}">
+                <img class="preview" src="http://www.cinetransat.ch/2014/wp-content/uploads/{{img}}" alt="{{title}}">
             </label>
             <input type="checkbox" checked="checked" id="{{date}}" name="{{date}}" value="{{time}} {{title}}">
+            <div class="weather" id="weather{{date}}"></div>
             <a href="http://www.cinetransat.ch/2014/date/{{url}}/#films_first" target="_blank">info »</a>
         </li>
         {{/movies}}
@@ -339,15 +343,39 @@ formattedDate: function() {
 }};
 
         var displayMovies = function() {
+            var template, html;
+
         	if($.browser.mobile) {
         	   $('#error').html('Malheureusement, <a href="http://doodle.com">Doodle</a> ne supporte pas la fonctionnalité requise pour cette page sur les téléphones mobiles :(').show(); 	
         	} else {
-                var template = $('#template').html();
+                template = $('#template').html();
                 Mustache.parse(template);
-                var html = Mustache.render(template, data);
+                html = Mustache.render(template, data);
                 $('#movies').html(html);
                 $('#content').show();
         	}
+
+            // get weather
+            $.get(
+                'http://api.openweathermap.org/data/2.5/forecast/daily',
+                {q: 'Geneva,Switzerland'},
+                function(data) {
+                    var i, len, date, el, forecast;
+                    if(data && data.list) {
+                        for(i = 0, len = data.list.length; i < len; i++) {
+                            forecast = data.list[i];
+                            date = new Date(forecast.dt * 1000);
+                            y = date.getFullYear();
+                            m = (date.getMonth() + 1);
+                            d = date.getDate();
+                            el = $('#weather' + y + (m < 10? '0' : '') + m + d);
+                            if(el) {
+                                el.html('<img src="http://openweathermap.org/img/w/' + forecast.weather[0].icon + '.png" alt="' + forecast.weather[0].description + '">');
+                            }
+                        }
+                    }
+                },
+                'json')
         }
 
         $(document).ready(displayMovies);
