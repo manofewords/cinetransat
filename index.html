@@ -148,7 +148,7 @@
     <section id="error">
     </section>
     <section id="content">
-    	<form action="http://doodle.com/create" method="GET">
+    	<form action="http://doodle.com/create" method="POST">
             <div id="movies"></div>
             <input type="hidden" name="type" value="date">
             <input type="hidden" name="levels" value="2">
@@ -171,7 +171,7 @@
                 <p class="date">{{formattedDate}}</p>
                 <img class="preview" src="http://www.cinetransat.ch/2014/wp-content/uploads/{{img}}" alt="{{title}}">
             </label>
-            <input type="checkbox" checked="checked" id="{{date}}" name="{{date}}" value="{{time}} {{title}}">
+            <input type="checkbox" checked="checked" id="{{date}}" name="{{date}}" value="{{title}}">
             <div class="weather" id="weather{{date}}"></div>
             <a href="http://www.cinetransat.ch/2014/date/{{url}}/#films_first" target="_blank">info »</a>
         </li>
@@ -351,7 +351,7 @@ formattedDate: function() {
         }
 
         var displayMovies = function() {
-            var template, html, i, len, movies, today;
+            var template, html, i, len, movies, movie, today;
 
         	if($.browser.mobile) {
         	   $('#error').html('Malheureusement, <a href="http://doodle.com">Doodle</a> ne supporte pas la fonctionnalité requise pour cette page sur les téléphones mobiles :(').show(); 	
@@ -360,8 +360,12 @@ formattedDate: function() {
                 today = dateToString(new Date());
                 movies = [];
                 for(i = 0, len = data.movies.length; i < len; i++) {
-                    if(data.movies[i].date >= today) {
-                        movies.push(data.movies[i]);
+                    movie = data.movies[i];
+                    if(movie.date >= today) {
+                        if(movie.title.length > 20) { // Doodle's dateText options are limited to 20 chars
+                            movie.title = movie.title.substr(0, 17) + "...";
+                        }
+                        movies.push(movie);
                     }
                 }
                 data.movies = movies;
